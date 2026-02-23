@@ -1,97 +1,104 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Readora
 
-# Getting Started
+Readora is a React Native app to search books using the Google Books API and browse results with infinite scrolling. Tap any book to open a details page featuring a clean image loader and rating display.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+### Features
+- Live search with 500ms debounce
+- Infinite scroll pagination on results
+- Book details view with cover, rating stars, and overview
+- Robust error handling for API calls
+- Consistent theming with react-native-paper
+- Icons via react-native-vector-icons (MaterialCommunityIcons)
 
-## Step 1: Start Metro
+### Tech Stack
+- React Native 0.84
+- TypeScript
+- react-native-paper
+- react-native-vector-icons
+- Jest + react-test-renderer
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Prerequisites
+- Node >= 22.11 (see engines in package.json)
+- Xcode (iOS) and/or Android Studio (Android)
+- iOS: CocoaPods (installed via Homebrew or Ruby)
 
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+## Install
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+## iOS Setup
+Install native pods:
+```bash
+npx pod-install
 ```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
+Alternatively (if you use Ruby bundler):
+```bash
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## Android Setup
+Nothing special is required beyond the standard Android SDK setup. Vector icons are configured to package fonts via Gradle.
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+## Run
+Start Metro:
+```bash
+npm start
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+In a separate terminal:
+```bash
+# Android
+npm run android
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+# iOS
+npm run ios
+```
 
-## Step 3: Modify your app
+## Lint and Tests
+```bash
+npm run lint
+npm test
+```
 
-Now that you have successfully run the app, let's make changes!
+## Configuration
+- API: Uses Google Books public endpoint (no key required for basic queries).
+  - Base URL: `https://www.googleapis.com/books/v1/volumes`
+  - Code: [src/services/bookService.ts](file:///Users/geeksforce/readora/src/services/bookService.ts)
+- Theming and constants:
+  - Code: [src/constants/index.ts](file:///Users/geeksforce/readora/src/constants/index.ts)
+- Types and interfaces:
+  - Code: [src/types/interfaces.ts](file:///Users/geeksforce/readora/src/types/interfaces.ts)
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## App Icons
+- Source image: `/readora_icon.png`
+- iOS icons are generated into the asset catalog:
+  - Path: ios/readora/Images.xcassets/AppIcon.appiconset
+  - Mapping: [Contents.json](file:///Users/geeksforce/readora/ios/readora/Images.xcassets/AppIcon.appiconset/Contents.json)
+- Android launcher icons are placed under:
+  - android/app/src/main/res/mipmap-*/ic_launcher.png
+  - android/app/src/main/res/mipmap-*/ic_launcher_round.png
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Icons in UI
+- The app uses MaterialCommunityIcons through react-native-paper’s custom icon configuration.
+  - Adapter: [IconAdapter.tsx](file:///Users/geeksforce/readora/src/shared/components/IconAdapter.tsx)
+  - Provider setup: [App.tsx](file:///Users/geeksforce/readora/App.tsx)
+Ensure a clean rebuild after dependency changes so fonts are bundled.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## App Usage
+- Search Screen: Type at least 2 characters to trigger results. Tap a result to open details.
+  - Code: [SearchScreen.tsx](file:///Users/geeksforce/readora/src/screens/SearchScreen.tsx)
+- Results Screen: Scroll to load more; automatically fetches the next page.
+  - Code: [ResultsScreen.tsx](file:///Users/geeksforce/readora/src/screens/ResultsScreen.tsx)
+- Details Screen: Displays book cover with an in-image loader and a retry icon on errors, rating stars, and overview text when available.
+  - Code: [BookDetailsScreen.tsx](file:///Users/geeksforce/readora/src/screens/BookDetailsScreen.tsx)
 
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Troubleshooting
+- Icons not showing:
+  - Android: Do a clean rebuild so vector icon fonts are included in the APK.
+  - iOS: Run `npx pod-install` and rebuild. Ensure the app uses the `IconAdapter` in the PaperProvider settings.
+- Image not loading on details:
+  - The overlay shows a spinner; if loading fails, tap the reload icon to retry.
+- HTTP images blocked:
+  - The app upgrades `http://` thumbnails to `https://`. If an image still fails, it will show a retry control.
